@@ -37,7 +37,7 @@ Unlike stock camera apps that hide or automate key controls, CineCam is manual-c
   - Manual-control-first UX.
   - Better in-session control of shutter, white balance, ISO, and related camera settings in one place.
 - Inferred from repository (not user-locked commitments yet):
-  - Current app identity in code: `CineCam` (`com.ankush.cinecam`).
+  - Current app identity in code: `CineCam` (`com.cinecam.app`).
   - Android project currently configured with `minSdk 29`.
 - Explicitly undecided:
   - Secondary user segments beyond solo creators.

@@ -1,4 +1,4 @@
-package com.ankush.cinecam
+package com.cinecam.app
 
 import android.graphics.ImageFormat
 import android.os.Handler

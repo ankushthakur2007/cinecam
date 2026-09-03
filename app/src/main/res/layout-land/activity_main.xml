@@ -42,7 +42,7 @@
             app:layout_constraintStart_toStartOf="@id/previewView"
             app:layout_constraintTop_toTopOf="@id/previewView" />
 
-        <com.ankush.cinecam.MonitoringOverlayView
+        <com.cinecam.app.MonitoringOverlayView
             android:id="@+id/monitoringOverlay"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -52,7 +52,7 @@
             app:layout_constraintStart_toStartOf="@id/previewView"
             app:layout_constraintTop_toTopOf="@id/previewView" />
 
-        <com.ankush.cinecam.FrameGuidesView
+        <com.cinecam.app.FrameGuidesView
             android:id="@+id/frameGuides"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -62,7 +62,7 @@
             app:layout_constraintStart_toStartOf="@id/previewView"
             app:layout_constraintTop_toTopOf="@id/previewView" />
 
-        <com.ankush.cinecam.FocusIndicatorView
+        <com.cinecam.app.FocusIndicatorView
             android:id="@+id/focusIndicator"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -72,7 +72,7 @@
             app:layout_constraintStart_toStartOf="@id/previewView"
             app:layout_constraintTop_toTopOf="@id/previewView" />
 
-        <com.ankush.cinecam.HistogramView
+        <com.cinecam.app.HistogramView
             android:id="@+id/histogramView"
             android:layout_width="132dp"
             android:layout_height="56dp"

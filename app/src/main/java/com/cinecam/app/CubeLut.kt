@@ -1,4 +1,4 @@
-package com.ankush.cinecam
+package com.cinecam.app
 
 import kotlin.math.floor
 

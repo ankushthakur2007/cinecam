@@ -1,4 +1,4 @@
-package com.ankush.cinecam
+package com.cinecam.app
 
 import android.content.Context
 import android.graphics.Canvas

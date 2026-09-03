@@ -1,4 +1,4 @@
-package com.ankush.cinecam
+package com.cinecam.app
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -55,7 +55,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.ankush.cinecam.databinding.ActivityMainBinding
+import com.cinecam.app.databinding.ActivityMainBinding
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -208,6 +208,7 @@ class MainActivity : AppCompatActivity() {
         startAudioMonitoring()
 
         if (hasPermissions()) startCamera() else requestPermissions()
+        UpdateChecker.check(this)
     }
 
     override fun onResume() {

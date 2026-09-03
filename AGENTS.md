@@ -1,6 +1,10 @@
 # AGENTS.md — CineCam
 
-Single-module native Android app (`:app`, `com.ankush.cinecam`). Offline-first, sideloaded personal build, no backend/network. CameraX 1.4.0 + Camera2Interop, XML views + viewBinding (no Compose). PRD: `cinecam-android-prd.md`; product constraints: `PRODUCT.md`.
+Single-module native Android app (`:app`, `com.cinecam.app`). Offline-first, sideloaded personal build, no backend/network. CameraX 1.4.0 + Camera2Interop, XML views + viewBinding (no Compose). PRD: `cinecam-android-prd.md`; product constraints: `PRODUCT.md`.
+
+## Build & release
+
+- `./gradlew assembleDebug` locally. Push to `main` triggers `.github/workflows/auto-apk.yml` → debug APK published as prerelease `auto-<sha>` (stable releases stay manual; the in-app updater in `UpdateChecker.kt` only prompts for stable via `releases/latest`).
 
 ## Build
 

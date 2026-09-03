@@ -21,7 +21,13 @@ Prerequisites: JDK 17, Android SDK (API 35), `local.properties` with `sdk.dir`.
 ./gradlew assembleRelease
 ```
 
-No unit/instrumentation tests yet. Single module (`:app`, `com.ankush.cinecam`), CameraX 1.4.0 + Camera2 interop, XML views + viewBinding (no Compose), `minSdk 29`, `targetSdk/compileSdk 35`.
+No unit/instrumentation tests yet. Single module (`:app`, `com.cinecam.app`), CameraX 1.4.0 + Camera2 interop, XML views + viewBinding (no Compose), `minSdk 29`, `targetSdk/compileSdk 35`.
+
+## Releases & updates
+
+- Every push to `main` builds a debug APK via GitHub Actions (`.github/workflows/auto-apk.yml`) and publishes it as a **prerelease** (`auto-<sha>`).
+- Stable releases (e.g. `v0.1.0`) are cut manually with `gh release create`.
+- The app checks `releases/latest` on launch and offers the release page when a newer **stable** build exists (CI prereleases never trigger it). Offline or API failure is silent.
 
 ## Device notes
 

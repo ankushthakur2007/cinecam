@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.ankush.cinecam"
+    namespace = "com.cinecam.app"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.ankush.cinecam"
+        applicationId = "com.cinecam.app"
         minSdk = 29
         targetSdk = 35
         versionCode = 1
