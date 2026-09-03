@@ -1,0 +1,42 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108"
+    android:tintMode="src_in">
+
+    <!-- Viewfinder corner brackets -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M26,42 L26,26 L42,26"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="6" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M66,26 L82,26 L82,42"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="6" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M26,66 L26,82 L42,82"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="6" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M66,82 L82,82 L82,66"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="6" />
+
+    <!-- Red tally dot: the locked subject -->
+    <path
+        android:fillColor="#FF3B30"
+        android:pathData="M43,54 a11,11 0 1,0 22,0 a11,11 0 1,0 -22,0" />
+</vector>
