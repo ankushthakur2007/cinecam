@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cinecam_bg">#000000</color>
+    <color name="cinecam_panel_bg">#CC000000</color>
+    <color name="cinecam_text_primary">#FFFFFF</color>
+    <color name="cinecam_text_secondary">#B3FFFFFF</color>
+    <color name="cinecam_accent">#FF3B30</color>
+    <color name="cinecam_accent_soft">#FF6B6B</color>
+    <color name="cinecam_status_recording">#CC550000</color>
+</resources>

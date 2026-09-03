@@ -1,0 +1,1269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- CineCam viewfinder-first layout (portrait).
+     Live image is the primary UI: slim status readout on top, preview fills
+     the middle, settings panel is capped so it can never swallow the preview,
+     one red REC action at thumb reach. Landscape twin: layout-land/activity_main.xml
+     (same view IDs — MainActivity works with either untouched). -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cinecam_bg">
+
+    <!-- Slim action-slider status bar. Fixed-height rows so readouts can never
+         pile on top of each other; values scroll horizontally if narrow. -->
+    <LinearLayout
+        android:id="@+id/statusBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingStart="10dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="6dp"
+        android:screenReaderFocusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:fillViewport="true"
+            android:importantForAccessibility="no"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/readoutState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:accessibilityLiveRegion="polite"
+                    android:singleLine="true"
+                    android:text="@string/idle"
+                    android:textColor="@color/cinecam_accent_soft"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutIso"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/default_readout_iso"
+                    android:textColor="@color/cinecam_text_primary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutShutter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/default_readout_shutter"
+                    android:textColor="@color/cinecam_text_primary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutWb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/default_readout_wb"
+                    android:textColor="@color/cinecam_text_primary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutFocus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/default_readout_focus"
+                    android:textColor="@color/cinecam_text_primary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutFps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/default_fps"
+                    android:textColor="@color/cinecam_text_primary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutTint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="0"
+                    android:textColor="@color/cinecam_text_primary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutZoom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:singleLine="true"
+                    android:text="@string/default_zoom"
+                    android:textColor="@color/cinecam_text_primary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:fillViewport="true"
+            android:importantForAccessibility="no"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/readoutLog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/default_readout_log"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutLut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/default_readout_lut"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutHdr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/default_readout_hdr"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutAgsl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/default_readout_agsl"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutMic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/default_readout_mic"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutCodec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/default_readout_hdr"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutBitrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/default_bitrate"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutAspect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:singleLine="true"
+                    android:text="@string/aspect_169"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:fillViewport="true"
+            android:importantForAccessibility="no"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/readoutClip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/clip_none"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutOverlayMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/default_overlay_mode"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutOverlayLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/default_overlay_level"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutGuides"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/guide_off"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutMicSource"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/default_mic_source"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutMicGain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/default_mic_gain"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutStorage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:singleLine="true"
+                    android:text="@string/default_readout_hdr"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/readoutTc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/idle"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+    <!-- Viewfinder zone: preview + monitoring layers + edge controls. -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@id/controlPanel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBar">
+
+        <androidx.camera.view.PreviewView
+            android:id="@+id/previewView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/camera_preview"
+            app:implementationMode="compatible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:scaleType="fillCenter" />
+
+        <View
+            android:id="@+id/previewGradeOverlay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@android:color/transparent"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@id/previewView"
+            app:layout_constraintEnd_toEndOf="@id/previewView"
+            app:layout_constraintStart_toStartOf="@id/previewView"
+            app:layout_constraintTop_toTopOf="@id/previewView" />
+
+        <com.ankush.cinecam.MonitoringOverlayView
+            android:id="@+id/monitoringOverlay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@id/previewView"
+            app:layout_constraintEnd_toEndOf="@id/previewView"
+            app:layout_constraintStart_toStartOf="@id/previewView"
+            app:layout_constraintTop_toTopOf="@id/previewView" />
+
+        <com.ankush.cinecam.FrameGuidesView
+            android:id="@+id/frameGuides"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@id/previewView"
+            app:layout_constraintEnd_toEndOf="@id/previewView"
+            app:layout_constraintStart_toStartOf="@id/previewView"
+            app:layout_constraintTop_toTopOf="@id/previewView" />
+
+        <com.ankush.cinecam.FocusIndicatorView
+            android:id="@+id/focusIndicator"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@id/previewView"
+            app:layout_constraintEnd_toEndOf="@id/previewView"
+            app:layout_constraintStart_toStartOf="@id/previewView"
+            app:layout_constraintTop_toTopOf="@id/previewView" />
+
+        <com.ankush.cinecam.HistogramView
+            android:id="@+id/histogramView"
+            android:layout_width="132dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="#99000000"
+            android:importantForAccessibility="no"
+            android:padding="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <SeekBar
+            android:id="@+id/sliderEdgeIso"
+            android:layout_width="48dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/cd_edge_iso_control"
+            android:importantForAccessibility="no"
+            android:max="12"
+            android:progress="0"
+            android:rotation="-90"
+            app:layout_constraintBottom_toBottomOf="@id/previewView"
+            app:layout_constraintStart_toStartOf="@id/previewView"
+            app:layout_constraintTop_toTopOf="@id/previewView" />
+
+        <SeekBar
+            android:id="@+id/sliderEdgeFocus"
+            android:layout_width="48dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/cd_edge_focus_control"
+            android:importantForAccessibility="no"
+            android:max="100"
+            android:progress="0"
+            android:rotation="-90"
+            app:layout_constraintBottom_toBottomOf="@id/previewView"
+            app:layout_constraintEnd_toEndOf="@id/previewView"
+            app:layout_constraintTop_toTopOf="@id/previewView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Settings panel. Height-capped and bottom-biased so the viewfinder
+         always keeps the remaining space instead of being squeezed to zero. -->
+    <LinearLayout
+        android:id="@+id/controlPanel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/cinecam_panel_bg"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="360dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBar"
+        app:layout_constraintVertical_bias="1">
+
+        <ScrollView
+            android:id="@+id/controlScroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:accessibilityHeading="true"
+                    android:letterSpacing="0.1"
+                    android:text="@string/section_exposure"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_iso"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <SeekBar
+                        android:id="@+id/sliderIso"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_iso_sensitivity"
+                        android:max="12"
+                        android:progress="0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_shutter_speed"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <SeekBar
+                        android:id="@+id/sliderShutter"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_shutter_speed"
+                        android:max="8"
+                        android:progress="4" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_white_balance"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <SeekBar
+                        android:id="@+id/sliderWb"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_white_balance"
+                        android:max="12"
+                        android:progress="6" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_tint"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <SeekBar
+                        android:id="@+id/sliderTint"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_tint_adjust"
+                        android:max="100"
+                        android:progress="50" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_frame_rate"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <SeekBar
+                        android:id="@+id/sliderFps"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_frame_rate"
+                        android:max="2"
+                        android:progress="0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_bitrate"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <SeekBar
+                        android:id="@+id/sliderBitrate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_video_bitrate"
+                        android:max="4"
+                        android:progress="2" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_ae_lock"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <Button
+                        android:id="@+id/buttonAeLock"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_ae_lock"
+                        android:minHeight="48dp"
+                        android:text="@string/ae_unlocked" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:accessibilityHeading="true"
+                    android:letterSpacing="0.1"
+                    android:text="@string/section_focus"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_manual_focus"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <SeekBar
+                        android:id="@+id/sliderFocus"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_manual_focus"
+                        android:max="100"
+                        android:progress="0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_focus_pull"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <Button
+                        android:id="@+id/buttonFocusA"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_focus_pull"
+                        android:minHeight="48dp"
+                        android:text="A" />
+
+                    <Button
+                        android:id="@+id/buttonFocusB"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_focus_pull"
+                        android:minHeight="48dp"
+                        android:text="B" />
+
+                    <Button
+                        android:id="@+id/buttonFocusPull"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_focus_pull"
+                        android:minHeight="48dp"
+                        android:text="PULL" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:accessibilityHeading="true"
+                    android:letterSpacing="0.1"
+                    android:text="@string/section_monitoring"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_overlay_mode"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <SeekBar
+                        android:id="@+id/sliderOverlayMode"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_overlay_mode"
+                        android:max="3"
+                        android:progress="0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_overlay_level"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <SeekBar
+                        android:id="@+id/sliderOverlayLevel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_overlay_level"
+                        android:max="100"
+                        android:progress="60" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_guides"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <SeekBar
+                        android:id="@+id/sliderGuides"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_frame_guides"
+                        android:max="5"
+                        android:progress="0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_grid"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <Switch
+                        android:id="@+id/switchGrid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:contentDescription="@string/cd_thirds_grid"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_preview_look"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <Switch
+                        android:id="@+id/switchLogPreview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:contentDescription="@string/cd_enable_log_preview"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp" />
+
+                    <Switch
+                        android:id="@+id/switchLutPreview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:checked="true"
+                        android:contentDescription="@string/cd_enable_lut_preview"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp" />
+
+                    <Button
+                        android:id="@+id/buttonLoadCube"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_load_lut_cube_file"
+                        android:minHeight="48dp"
+                        android:text="@string/load_cube" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_lut_strength"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <SeekBar
+                        android:id="@+id/sliderLutStrength"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_lut_strength"
+                        android:max="100"
+                        android:progress="100" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_renderer_hdr"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <Switch
+                        android:id="@+id/switchAgsl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:contentDescription="@string/cd_enable_agsl_renderer"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp" />
+
+                    <Switch
+                        android:id="@+id/switchHdr10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:checked="false"
+                        android:contentDescription="@string/cd_enable_hdr_recording"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:accessibilityHeading="true"
+                    android:letterSpacing="0.1"
+                    android:text="@string/section_capture"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_lens"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <Button
+                        android:id="@+id/buttonLens"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_lens_selection"
+                        android:minHeight="48dp"
+                        android:text="@string/lens_back" />
+
+                    <Button
+                        android:id="@+id/buttonQuality"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_quality_selection"
+                        android:minHeight="48dp"
+                        android:text="@string/quality_fhd" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_aspect"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <Button
+                        android:id="@+id/buttonAspect"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_aspect_ratio"
+                        android:minHeight="48dp"
+                        android:text="@string/aspect_169" />
+
+                    <Button
+                        android:id="@+id/buttonTorch"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_torch"
+                        android:minHeight="48dp"
+                        android:text="@string/torch_off" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_zoom"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <SeekBar
+                        android:id="@+id/sliderZoom"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_zoom_level"
+                        android:max="100"
+                        android:progress="0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_stabilizer"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <Switch
+                        android:id="@+id/switchStab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:contentDescription="@string/cd_preview_stabilization"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:accessibilityHeading="true"
+                    android:letterSpacing="0.1"
+                    android:text="@string/section_audio"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_microphone_input"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <SeekBar
+                        android:id="@+id/sliderMicSource"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_microphone_input_source"
+                        android:max="1"
+                        android:progress="0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_microphone_gain"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <SeekBar
+                        android:id="@+id/sliderMicGain"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_microphone_gain"
+                        android:max="30"
+                        android:progress="10" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_audio_meters"
+                        android:textColor="@color/cinecam_text_primary"
+                        android:textSize="13sp" />
+
+                    <ProgressBar
+                        android:id="@+id/meterPeak"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_audio_peak_meter"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressTint="#30D158"
+                        android:progressBackgroundTint="#262628" />
+
+                    <ProgressBar
+                        android:id="@+id/meterRms"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_audio_rms_meter"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressTint="#30D158"
+                        android:progressBackgroundTint="#262628" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:accessibilityHeading="true"
+                    android:letterSpacing="0.1"
+                    android:text="@string/section_presets"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/buttonPreset1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_preset_slot"
+                        android:minHeight="48dp"
+                        android:text="P1" />
+
+                    <Button
+                        android:id="@+id/buttonPreset2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_preset_slot"
+                        android:minHeight="48dp"
+                        android:text="P2" />
+
+                    <Button
+                        android:id="@+id/buttonPreset3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_preset_slot"
+                        android:minHeight="48dp"
+                        android:text="P3" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textCodecInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/unsupported_options_fallback"
+                    android:textColor="@color/cinecam_text_secondary"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <!-- Thumb-reach action bar: monitoring shortcut + the one red action. -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="12dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/buttonFn"
+            android:layout_width="72dp"
+            android:layout_height="60dp"
+            android:contentDescription="@string/cd_cycle_monitoring_overlay_mode"
+            android:minHeight="60dp"
+            android:text="@string/button_fn" />
+
+        <Button
+            android:id="@+id/recordButton"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/cinecam_accent"
+            android:contentDescription="@string/cd_start_or_stop_recording"
+            android:minHeight="60dp"
+            android:text="@string/record"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

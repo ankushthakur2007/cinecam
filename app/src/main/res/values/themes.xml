@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark cinema chrome: near-black surfaces, neutral controls, one red
+         accent reserved for REC / record state. The app hard-codes black
+         backgrounds, so this theme only re-tints stock widgets. -->
+    <style name="Theme.CineCam" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@android:color/black</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="android:windowBackground">@color/cinecam_bg</item>
+        <item name="colorPrimary">#26262B</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#8E8E93</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorControlActivated">#E8E8E8</item>
+        <item name="seekBarStyle">@style/CineCamSeekBar</item>
+    </style>
+
+    <style name="CineCamSeekBar" parent="Widget.AppCompat.SeekBar">
+        <item name="android:progressTint">#E8E8E8</item>
+        <item name="android:progressBackgroundTint">#38383C</item>
+        <item name="android:thumbTint">#E8E8E8</item>
+    </style>
+</resources>
