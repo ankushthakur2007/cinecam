@@ -74,8 +74,13 @@ object UpdateChecker {
         }
     }
 
+    private val TAG_PATTERN = Regex("^v?\\d+(\\.\\d+){1,3}$")
+
     /** True when [tag] (e.g. "v0.2.0") is strictly newer than [current]. */
     fun isNewer(tag: String, current: String): Boolean {
+        // Strict shape check: CI tags like "auto-f768bd9" would otherwise
+        // parse as a giant version number (7828076 > 0.1.0) and nag forever.
+        if (!TAG_PATTERN.matches(tag.trim())) return false
         val t = numericParts(tag)
         if (t.isEmpty()) return false
         val c = numericParts(current)
