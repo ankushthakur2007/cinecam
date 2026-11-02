@@ -38,5 +38,7 @@ Developed against a Realme RMX2061 (Android 11, Camera2 `LEVEL_3`). Honest hardw
 ## Docs
 
 - `cinecam-android-prd.md` — full PRD (goals, Filmic/Blackmagic research, milestones)
+- `cinecam-v2-roadmap.md` — research-backed plan to production grade (market state Sept 2026, gap analysis, phased roadmap)
 - `PRODUCT.md` — product constraints
 - `AGENTS.md` — contributor/agent guide: architecture, gotchas, commands
+- `.qoder/skills/` — project skills: `/cinecam-device-verify`, `/cinecam-capability-audit`, `/cinecam-ux-conformance`, `/cinecam-release-hygiene`

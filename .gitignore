@@ -24,3 +24,7 @@ local.properties
 
 # Profiling
 *.hprof
+
+#agent — keep Qoder scratch out of git, but track the project skills
+.qoder/*
+!.qoder/skills/
